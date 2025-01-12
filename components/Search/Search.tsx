@@ -1,7 +1,9 @@
-"use client";
+'use client';
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactComponent as GlassesIcon } from '@/svg/glasses.svg';
+import { cn } from 'clsx-for-tailwind';
 
 export const Search = () => {
   const router = useRouter();
@@ -9,7 +11,7 @@ export const Search = () => {
   const searchParams = useSearchParams();
 
   const defaultValue =
-    new URLSearchParams(Array.from(searchParams.entries())).get("text") || "";
+    new URLSearchParams(Array.from(searchParams.entries())).get('text') || '';
   const [value, setValue] = useState<string>(defaultValue);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
 
@@ -22,18 +24,33 @@ export const Search = () => {
       clearTimeout(timerRef.current);
     }
     timerRef.current = setTimeout(() => {
-      const query = value ? `?text=${value}` : "";
+      const query = value ? `?text=${value}` : '';
 
       router.push(`${pathname}${query}`);
     }, 200);
   }, [pathname, router, value]);
 
   return (
-    <input
-      type="search"
-      onChange={updateSearch}
-      value={value}
-      className="h-8 border-slate-500 bg-slate-900 text-slate-50 p-2"
-    />
+    <div className="flex items-stretch rounded border border-[#b1d3db] focus-within:border-[#438291]">
+      <label className="flex grow">
+        <input
+          type="search"
+          onChange={updateSearch}
+          value={value}
+          className={cn(
+            'h-[3.125rem] grow rounded border-0 border-slate-500 bg-[#f9f9ff] p-2 px-3 align-middle text-sm text-[#374044] outline-none focus:outline-none',
+            'placeholder:text-[#fafaff]',
+          )}
+          placeholder="Weterynarz, miejscowość"
+        />
+      </label>
+      <button
+        type="submit"
+        className="mmborder-0 inline-flex w-24 items-center justify-center rounded bg-yellow-300"
+      >
+        <span className="sr-only">Szukaj</span>
+        <GlassesIcon className="h-5 fill-white" />
+      </button>
+    </div>
   );
 };

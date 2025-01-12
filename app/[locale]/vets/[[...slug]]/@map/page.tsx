@@ -1,7 +1,7 @@
-import { findVetBySlug } from "@/util/queries/vets";
+import { findVetBySlug } from '@/util/queries/vets';
 
 const zoom = 15;
-const defaultName = " ";
+const defaultName = ' ';
 const defaultLatitude = 52.230036220572636;
 const defaultLongitude = 21.01191567834609;
 const apiKey = process.env.NEXT_GOOGLE_MAPS_KEY as string;
@@ -16,8 +16,8 @@ const buildSrc = (params?: {
 }) => {
   const encodedName = encodeURIComponent(
     `${params?.name || defaultName}, ${params?.city}, ${
-      params?.streetName || ""
-    } ${params?.streetNumber || ""}`
+      params?.streetName || ''
+    } ${params?.streetNumber || ''}`,
   );
   return `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodedName}&zoom=${zoom}&center=${
     params?.latitude || defaultLatitude
@@ -42,20 +42,20 @@ const MapPage = async ({
   });
 
   return (
-    <div className="fixed top-0 left-0 bottom-0 right-0 -z-10">
+    <div className="fixed bottom-0 left-0 right-0 top-0 -z-10">
       {mapSrc && (
         <iframe
           width="130%"
           height="120%"
           style={{
-            pointerEvents: "none",
+            pointerEvents: 'none',
             border: 0,
-            position: "fixed",
-            top: "-10%",
-            left: "-15%",
-            bottom: "-10%",
-            right: "-15%",
-            overflow: "hidden",
+            position: 'fixed',
+            top: '-10%',
+            left: '-15%',
+            bottom: '-10%',
+            right: '-15%',
+            overflow: 'hidden',
           }}
           loading="lazy"
           allowFullScreen

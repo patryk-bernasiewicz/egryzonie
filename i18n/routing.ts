@@ -1,18 +1,18 @@
-import { defineRouting } from "next-intl/routing";
+import { defineRouting } from 'next-intl/routing';
 
 export const routing = defineRouting({
-  locales: ["pl", "en"],
-  defaultLocale: "pl",
-  localePrefix: "never",
+  locales: ['pl', 'en'],
+  defaultLocale: 'pl',
+  localePrefix: 'never',
   pathnames: {
-    "/": "/",
-    "/vets": {
-      en: "/vets",
-      pl: "/weterynarze",
+    '/': '/',
+    '/vets': {
+      en: '/vets',
+      pl: '/weterynarze',
     },
-    "/vets/[slug]": {
-      en: "/vets/[slug]",
-      pl: "/weterynarze/[slug]",
+    '/vets/[slug]': {
+      en: '/vets/[slug]',
+      pl: '/weterynarze/[slug]',
     },
   },
 });

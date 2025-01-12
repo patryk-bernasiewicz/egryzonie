@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 type VetsLayoutProps = {
   children: ReactNode;
@@ -8,17 +8,9 @@ type VetsLayoutProps = {
 
 const VetsLayout = async ({ children, search, map }: VetsLayoutProps) => {
   return (
-    <div key="vets-layout">
-      <div className="relative z-10">
-        <div>vets layout top</div>
-        <div>Search top</div>
-        {search}
-        <div>Search bottom</div>
-      </div>
-      <div className="relative z-0">{children}</div>
-      <div className="relative z-10">
-        <div>vets layout bottom</div>
-      </div>
+    <div key="vets-layout" className="flex h-full grow justify-between gap-4">
+      {search}
+      {children}
       {map}
     </div>
   );

@@ -1,7 +1,8 @@
-import "server-only";
-import { db } from "@/util/db";
-import { Vet } from "@prisma/client";
-import { GeoPoint } from "@/types/geopoint";
+import 'server-only';
+import { db } from '@/util/db';
+import { Vet } from '@prisma/client';
+import { GeoPoint } from '@/types/geopoint';
+import { unstable_cache } from 'next/cache';
 
 type VetWithDistance = Vet & {
   distance?: number;
@@ -23,35 +24,49 @@ const calculateDistance = (locationFrom: GeoPoint, locationTo: GeoPoint) => {
   return R * c;
 };
 
-export const findNearbyVets = async (
-  searchText: string,
-  point?: GeoPoint | null
-): Promise<VetWithDistance[]> => {
-  const items = await db.vet.findMany({
-    where: {
-      OR: [
-        { name: { contains: searchText } },
-        { address: { contains: searchText } },
-      ],
-    },
-  });
+export const findNearbyVets = unstable_cache(
+  async (
+    searchText: string,
+    point?: GeoPoint | null,
+  ): Promise<VetWithDistance[]> => {
+    const items = await db.vet.findMany({
+      where: {
+        OR: [
+          { name: { contains: searchText } },
+          { address: { contains: searchText } },
+          { streetName: { contains: searchText } },
+        ],
+      },
+    });
 
-  if (!point) {
-    return items;
-  }
+    if (!point) {
+      return items;
+    }
 
-  return items
-    .map((item) => ({
-      ...item,
-      distance: calculateDistance(point, {
-        latitude: Number(item.latitude),
-        longitude: Number(item.longitude),
-      }),
-    }))
-    .sort((a, b) => a.distance - b.distance);
-};
+    return items
+      .map((item) => ({
+        ...item,
+        distance: calculateDistance(point, {
+          latitude: Number(item.latitude),
+          longitude: Number(item.longitude),
+        }),
+      }))
+      .sort((a, b) => a.distance - b.distance);
+  },
+  [],
+  {
+    revalidate: 3600,
+  },
+);
 
-export const findVetBySlug = async (slug: string): Promise<Vet | null> =>
-  await db.vet.findUnique({
-    where: { slug },
-  });
+export const findVetBySlug = unstable_cache(
+  async (slug: string): Promise<Vet | null> => {
+    return await db.vet.findUnique({
+      where: { slug },
+    });
+  },
+  [],
+  {
+    revalidate: 3600,
+  },
+);

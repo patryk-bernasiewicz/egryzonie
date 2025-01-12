@@ -1,1 +1,1 @@
-export const GEOLOCATION_COOKIE = "geolocation";
+export const GEOLOCATION_COOKIE = 'geolocation';

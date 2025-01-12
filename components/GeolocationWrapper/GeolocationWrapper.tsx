@@ -1,7 +1,7 @@
-"use client";
-import { sendGeolocationData } from "@/actions/send-geolocation";
-import { StringCoordinates } from "@/types/string-coordinates";
-import React, { useEffect } from "react";
+'use client';
+import { sendGeolocationData } from '@/actions/send-geolocation';
+import { StringCoordinates } from '@/types/string-coordinates';
+import React, { useEffect } from 'react';
 
 export const GeolocationWrapper = ({
   children,
