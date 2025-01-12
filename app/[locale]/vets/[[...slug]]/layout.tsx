@@ -8,7 +8,10 @@ type VetsLayoutProps = {
 
 const VetsLayout = async ({ children, search, map }: VetsLayoutProps) => {
   return (
-    <div key="vets-layout" className="flex h-full grow justify-between gap-4">
+    <div
+      key="vets-layout"
+      className="flex h-full grow flex-col justify-between gap-4 md:flex-row"
+    >
       {search}
       {children}
       {map}

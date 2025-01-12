@@ -9,13 +9,13 @@ const Vets = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
 
   return (
     <GeolocationWrapper>
-      <div className="relative flex grow items-end justify-end gap-4 pb-8">
+      <div className="relative flex grow flex-col items-end justify-end gap-4 pb-8 lg:flex-row">
         {specificVet && (
           <>
-            <div className="h-[400px] w-1/3">
+            <div className="w-full lg:h-[400px] lg:w-1/2 xl:w-1/3">
               <VetMapDetails vet={specificVet} />
             </div>
-            <div className="h-[400px] w-2/3">
+            <div className="w-full lg:h-[400px] lg:w-1/2 xl:w-2/3">
               <VetInfoDetails vet={specificVet} />
             </div>
           </>

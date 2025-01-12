@@ -22,7 +22,7 @@ export const SearchResultsList = ({
   const searchParams = useSearchParams();
 
   return (
-    <div className="custom-scrollbar relative h-0 grow overflow-auto">
+    <div className="custom-scrollbar relative grow overflow-auto md:h-0">
       <Triangle className="absolute -top-3 left-4 h-3 fill-[#bdcfd3]" />
       <ul>
         {vets.map((vet) => (

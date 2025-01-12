@@ -13,6 +13,10 @@ body {
   width: 100%;
 }
 
+.leaflet-tile-pane {
+  filter: saturate(300%) hue-rotate(-10deg);
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #bdcfd3 transparent;
@@ -43,3 +47,4 @@ body {
     @apply mx-auto w-full max-w-[1480px] px-4;
   }
 }
+
