@@ -17,6 +17,8 @@ const MapPage = async ({
       <MapDisplay
         latitude={specificVet?.latitude || defaultLatitude}
         longitude={specificVet?.longitude || defaultLongitude}
+        name={specificVet?.name}
+        address={specificVet?.address || undefined}
       />
     </div>
   );

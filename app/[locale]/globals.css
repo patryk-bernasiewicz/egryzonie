@@ -17,6 +17,17 @@ body {
   filter: saturate(300%) hue-rotate(-10deg);
 }
 
+.leaflet-popup-content-wrapper {
+  background: rgba(239, 215, 77, 0.8);
+  box-shadow: none;
+  color: white;
+  border-radius: 4px;
+}
+.leaflet-popup-tip {
+  background: rgba(239, 215, 77, 0.8);
+  box-shadow: none;
+}
+
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #bdcfd3 transparent;
@@ -47,4 +58,3 @@ body {
     @apply mx-auto w-full max-w-[1480px] px-4;
   }
 }
-
