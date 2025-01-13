@@ -2,7 +2,26 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function generateRandomCoordinate(lat: number, lon: number, radiusInKm: number) {
+  const radiusInDegrees = radiusInKm / 111.32;
+  const u = Math.random();
+  const v = Math.random();
+  const w = radiusInDegrees * Math.sqrt(u);
+  const t = 2 * Math.PI * v;
+  const x = w * Math.cos(t);
+  const y = w * Math.sin(t);
+
+  const newLat = lat + y;
+  const newLon = lon + x;
+
+  return { latitude: newLat, longitude: newLon };
+}
+
 async function main() {
+  const centralLat = 52.70629791753231;
+  const centralLon = 16.380865410634094;
+  const radiusInKm = 40;
+
   await prisma.vet.createMany({
     data: [
       {
@@ -14,8 +33,8 @@ async function main() {
         phone: "612960123",
         email: "cztery.lapy@gmail.com",
         slug: "przychodnia-weterynaryjna-cztery-lapy",
-        latitude: 52.70629791753231,
-        longitude: 16.380865410634094,
+        latitude: centralLat,
+        longitude: centralLon,
       },
       {
         name: "Gabinet Weterynaryjny Futrzak",
@@ -26,8 +45,7 @@ async function main() {
         phone: "672610789",
         email: "futrzak.vet@gmail.com",
         slug: "gabinet-weterynaryjny-futrzak",
-        latitude: 52.70629791763231,
-        longitude: 16.380865410624094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Lecznicy Weterynaryjnej Pod Pelikanem",
@@ -38,8 +56,7 @@ async function main() {
         phone: "612967890",
         email: "pelikan.vet@wp.pl",
         slug: "lecznica-weterynaryjna-pod-pelikanem",
-        latitude: 52.70629791723231,
-        longitude: 16.380865410674094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Centrum Weterynaryjne Animals",
@@ -50,8 +67,7 @@ async function main() {
         phone: "612345678",
         email: "animals.centrum@gmail.com",
         slug: "centrum-weterynaryjne-animals",
-        latitude: 52.70629791743231,
-        longitude: 16.380865410644094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Klinika Weterynaryjna Happy Pet",
@@ -62,8 +78,7 @@ async function main() {
         phone: "618567234",
         email: "happy.pet@wp.pl",
         slug: "klinika-weterynaryjna-happy-pet",
-        latitude: 52.70629791733231,
-        longitude: 16.380865410654094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Przychodnia dla Zwierząt Pupil",
@@ -74,8 +89,7 @@ async function main() {
         phone: "672345789",
         email: "pupil.wet@gmail.com",
         slug: "przychodnia-dla-zwierzat-pupil",
-        latitude: 52.70629791773231,
-        longitude: 16.380865410614094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Gabinet Weterynaryjny Dr Dolittle",
@@ -86,8 +100,7 @@ async function main() {
         phone: "672345123",
         email: "drdolittle@wp.pl",
         slug: "gabinet-weterynaryjny-dr-dolittle",
-        latitude: 52.70629791783231,
-        longitude: 16.380865410604094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Klinika Weterynaryjna PetMed",
@@ -98,8 +111,7 @@ async function main() {
         phone: "614567890",
         email: "petmed@gmail.com",
         slug: "klinika-weterynaryjna-petmed",
-        latitude: 52.70629791793231,
-        longitude: 16.380865410594094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Centrum Zdrowia Zwierząt VetCare",
@@ -110,8 +122,7 @@ async function main() {
         phone: "672345678",
         email: "vetcare@wp.pl",
         slug: "centrum-zdrowia-zwierzat-vetcare",
-        latitude: 52.70629791713231,
-        longitude: 16.380865410684094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Lecznica Małych Zwierząt Łapka",
@@ -122,8 +133,7 @@ async function main() {
         phone: "672345789",
         email: "lapka.vet@gmail.com",
         slug: "lecznica-malych-zwierzat-lapka",
-        latitude: 52.70629791703231,
-        longitude: 16.380865410694094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Przychodnia Weterynaryjna Zwierzaki",
@@ -134,8 +144,7 @@ async function main() {
         phone: "612348765",
         email: "zwierzaki.vet@wp.pl",
         slug: "przychodnia-weterynaryjna-zwierzaki",
-        latitude: 52.70629791693231,
-        longitude: 16.380865410704094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Gabinet Weterynaryjny Animal Care",
@@ -146,8 +155,7 @@ async function main() {
         phone: "612349876",
         email: "animalcare@gmail.com",
         slug: "gabinet-weterynaryjny-animal-care",
-        latitude: 52.70629791683231,
-        longitude: 16.380865410714094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Klinika Dla Zwierząt PetVet",
@@ -158,8 +166,7 @@ async function main() {
         phone: "614567123",
         email: "petvet@wp.pl",
         slug: "klinika-dla-zwierzat-petvet",
-        latitude: 52.70629791673231,
-        longitude: 16.380865410724094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Przychodnia Weterynaryjna Zdrowa Łapa",
@@ -170,8 +177,7 @@ async function main() {
         phone: "614568234",
         email: "zdrowa.lapa@gmail.com",
         slug: "przychodnia-weterynaryjna-zdrowa-lapa",
-        latitude: 52.70629791663231,
-        longitude: 16.380865410734094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Gabinet Weterynaryjny Przyjaciel",
@@ -182,8 +188,7 @@ async function main() {
         phone: "612345987",
         email: "przyjaciel.vet@wp.pl",
         slug: "gabinet-weterynaryjny-przyjaciel",
-        latitude: 52.70629791653231,
-        longitude: 16.380865410744094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Centrum Weterynaryjne VetLife",
@@ -194,8 +199,7 @@ async function main() {
         phone: "614569876",
         email: "vetlife@gmail.com",
         slug: "centrum-weterynaryjne-vetlife",
-        latitude: 52.70629791643231,
-        longitude: 16.380865410754094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Lecznica Weterynaryjna Animal Health",
@@ -206,8 +210,7 @@ async function main() {
         phone: "957345678",
         email: "animal.health@wp.pl",
         slug: "lecznica-weterynaryjna-animal-health",
-        latitude: 52.70629791633231,
-        longitude: 16.380865410764094,
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
       },
       {
         name: "Przychodnia dla Zwierząt Domowych Azor",
@@ -218,9 +221,8 @@ async function main() {
         phone: "672345098",
         email: "azor.vet@gmail.com",
         slug: "przychodnia-dla-zwierzat-domowych-azor",
-        latitude: 52.70629791623231,
-        longitude: 16.380865410774094,
-      }
+        ...generateRandomCoordinate(centralLat, centralLon, radiusInKm),
+      },
     ],
   });
 }
