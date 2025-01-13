@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import 'simplebar-react/dist/simplebar.min.css';
+import Navbar from './_components/Navbar/Navbar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className="fixed z-10 h-10 w-full bg-slate-100">
-        <div className="container">navbar</div>
-      </div>
+      <Navbar />
       <div className="container relative h-full pt-10">{children}</div>
     </>
   );
