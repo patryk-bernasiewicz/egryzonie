@@ -4,7 +4,7 @@ import { Vet } from '@prisma/client';
 import { GeoPoint } from '@/types/geopoint';
 import { unstable_cache } from 'next/cache';
 
-type VetWithDistance = Vet & {
+export type VetWithDistance = Vet & {
   distance?: number;
 };
 
@@ -34,7 +34,6 @@ export const findNearbyVets = unstable_cache(
         OR: [
           { name: { contains: searchText } },
           { address: { contains: searchText } },
-          { streetName: { contains: searchText } },
         ],
       },
     });
