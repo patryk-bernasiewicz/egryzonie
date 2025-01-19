@@ -1,40 +1,48 @@
-Live version https://egryzonie.patrykb.pl/ (contains fake data for now)
+#### Live version https://egryzonie.patrykb.pl/ (contains fake data for now)
 
 ---
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# eGryzonie
 
-## Getting Started
+A search engine for veterinary clinics in Poland that specialize, or have doctors specializing in, rodents and exotic pets.
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This is a simple version of a project my fiancé and I have wanted to build for years but lacked the time or skills to pursue. I decided to use it as a learning opportunity to explore Next.js 15 and its App Router, as I haven’t worked with Next.js in over two years.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![eGryzonie Screenshot](https://raw.githubusercontent.com/patryk-bernasiewicz/egryzonie/refs/heads/master/public/screenshot.webp)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech stack used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind
+- Prisma
+- next-intl
+- SQLite (for now, I'm aiming to switch to MySQL/MariaDB in the nearest future)
+- Leaflet for maps
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+- Use latest version of Node.js
+- Clone the repository:  
+  `git clone https://github.com/patryk-bernasiewicz/egryzonie.git`  
+  `cd egryzonie`
+- Install dependencies:  
+  `npm i`
+- Create SQLite database and run migrations:  
+  `npx prisma migrate dev`
+- Run the dev server:  
+  `npm run dev`
+- The app is available at http://localhost:3002/ by default
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vets page
 
-## Deploy on Vercel
+Right now you can only browse fake veterinary places, described in `prisma/seed.ts` file. The `/vets` page will ask you for permission to read your geolocation data, and if it's granted, it will show you 5 places closest to you by default, and more if you decide to type something into the search bar.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Let me know if this project caught your eye, if you have any tips for me, or just want to talk. My email address is [patryk.bernasiewicz[at]gmail.com](mailto:patryk.bernasiewicz@gmail.com)
