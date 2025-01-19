@@ -5,7 +5,7 @@ import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { ReactComponent as GlassesIcon } from '@/svg/glasses.svg';
 import { cn } from 'clsx-for-tailwind';
 
-export const Search = () => {
+export const SearchInput = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

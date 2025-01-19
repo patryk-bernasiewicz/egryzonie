@@ -1,8 +1,8 @@
-import { Search } from '@/components/Search/Search';
 import { findNearbyVets } from '@/util/queries/vets';
 import { getCoordinatesFromCookie } from '../_utils/getCoordinatesFromCookie';
 import { SearchResultsBox } from './_components/SearchResultsBox';
 import { SearchResultsList } from './_components/SearchResultsList';
+import { SearchInput } from './_components/SearchInput';
 
 type VetsSearchPageProps = {
   searchParams: Promise<{ text?: string }>;
@@ -16,17 +16,20 @@ const VetsSearchPage = async ({
   const coordinates = await getCoordinatesFromCookie();
   const slug = (await params).slug?.[0];
   const searchText = (await searchParams).text;
-  const vets =
-    searchText && searchText.length >= 3
-      ? await findNearbyVets(searchText || '', coordinates)
-      : [];
+  const vets = await findNearbyVets(searchText || '', coordinates);
 
   return (
     <div className="relative z-10 flex max-w-[21.25rem] grow pb-8">
       <div className="flex w-full grow flex-col gap-3.5 pt-3.5">
-        <Search />
+        <SearchInput />
         {vets.length > 0 && <SearchResultsBox count={vets.length} />}
         <SearchResultsList vets={vets} activeSlug={slug} />
+        {process.env.IS_DEV_MODE == 'true' && (
+          <div>
+            ‼️ Strona w trakcie budowy. Nie przedstawiamy tu jeszcze żadnych
+            danych realnych placówek. ‼️
+          </div>
+        )}
       </div>
     </div>
   );

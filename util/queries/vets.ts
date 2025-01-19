@@ -29,6 +29,8 @@ export const findNearbyVets = unstable_cache(
     searchText: string,
     point?: GeoPoint | null,
   ): Promise<VetWithDistance[]> => {
+    const limit = searchText.length < 3 ? 5 : undefined;
+
     const items = await db.vet.findMany({
       where: {
         OR: [
@@ -36,6 +38,7 @@ export const findNearbyVets = unstable_cache(
           { address: { contains: searchText } },
         ],
       },
+      take: limit,
     });
 
     if (!point) {
