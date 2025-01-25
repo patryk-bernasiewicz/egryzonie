@@ -2,6 +2,11 @@ import { GeolocationWrapper } from '@/components/GeolocationWrapper/GeolocationW
 import { findVetBySlug } from '@/util/queries/vets';
 import { VetMapDetails } from './_components/VetMapDetails';
 import { VetInfoDetails } from './_components/VetInfoDetails';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Wyszukiwarka weterynarzy',
+};
 
 const Vets = async ({ params }: { params: Promise<{ slug: string[] }> }) => {
   const activeSlug = (await params)?.slug?.[0];
