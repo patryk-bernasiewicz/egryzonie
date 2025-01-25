@@ -38,7 +38,6 @@ export const findNearbyVets = unstable_cache(
           { address: { contains: searchText } },
         ],
       },
-      take: limit,
     });
 
     if (!point) {
@@ -53,7 +52,8 @@ export const findNearbyVets = unstable_cache(
           longitude: Number(item.longitude),
         }),
       }))
-      .sort((a, b) => a.distance - b.distance);
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, limit);
   },
   [],
   {

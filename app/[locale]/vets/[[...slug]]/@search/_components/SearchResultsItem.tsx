@@ -11,9 +11,11 @@ export const SearchResultsItem = ({ vet }: SearchResultsItemProps) => (
       <div className="text-sm">{vet.name}</div>
       <div className="flex items-center justify-between">
         <div className="text-sm font-bold">{vet.address}</div>
-        <div className="text-xs font-medium">
-          ~{Math.round(Number(vet.distance))} km
-        </div>
+        {vet.distance && (
+          <div className="text-nowrap text-xs font-medium">
+            ~{Math.round(vet.distance)} km
+          </div>
+        )}
       </div>
     </div>
   </div>
