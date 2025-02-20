@@ -72,3 +72,50 @@ export const findVetBySlug = unstable_cache(
     revalidate: 3600,
   },
 );
+
+export const findPaginatedVets = unstable_cache(
+  async (
+    search?: string,
+    page = 1,
+    limit = 10,
+  ): Promise<{
+    data: Vet[];
+    meta: {
+      currentPage: number;
+      totalPages: number;
+      totalItems: number;
+    };
+  }> => {
+    const where = search?.length
+      ? {
+          OR: [
+            { name: { contains: search } },
+            { address: { contains: search } },
+          ],
+        }
+      : undefined;
+
+    const vets = await db.vet.findMany({
+      where,
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    const count = await db.vet.count({
+      where,
+    });
+
+    return {
+      data: vets,
+      meta: {
+        currentPage: page,
+        totalPages: Math.ceil(count / limit),
+        totalItems: count,
+      },
+    };
+  },
+  [],
+  {
+    revalidate: 600,
+    tags: ['admin-vets'],
+  },
+);

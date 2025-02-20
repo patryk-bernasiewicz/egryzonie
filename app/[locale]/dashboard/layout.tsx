@@ -5,12 +5,7 @@ type DashboardLayoutProps = {
 };
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      {children}
-    </div>
-  );
+  return children;
 };
 
 export default DashboardLayout;
