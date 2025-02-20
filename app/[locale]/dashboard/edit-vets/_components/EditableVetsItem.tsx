@@ -11,6 +11,8 @@ import { ReactComponent as CartIcon } from '@/svg/cart.svg';
 
 import EditVetMapPosition from './EditVetMapPosition';
 import type { ViewType } from './EditableVetsList';
+import { editVet } from '@/actions/edit-vet';
+import { Infer } from 'next/dist/compiled/superstruct';
 
 type EditableVetsItemProps = {
   vet: Vet;
@@ -73,7 +75,26 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
     event.stopPropagation();
   };
 
-  const values = watch();
+  const handleSave = async (data: Infer<typeof validationSchema>) => {
+    const editedVet: Vet = {
+      ...data,
+      latitude: Number(data.latitude),
+      longitude: Number(data.longitude),
+    };
+    const result = await editVet(vet, editedVet);
+    setEditMode(false);
+    reset({
+      ...result,
+      address: result.address || '',
+      phone: result.phone || '',
+      email: result.email || '',
+      latitude: result.latitude?.toString(),
+      longitude: result.longitude?.toString()
+    });
+  };
+
+  const latitude = watch('latitude');
+  const longitude = watch('longitude');
 
   return (
     <div
@@ -84,14 +105,15 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
       onClick={handleSetEdit}
     >
       {isEditMode ? (
-        <form onSubmit={handleSubmit((d) => console.log(d))}>
+        <form onSubmit={handleSubmit(handleSave)}>
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="flex flex-col md:items-end">
               <EditVetMapPosition
                 key={vet.id}
+                id={vet.id}
                 value={{
-                  latitude: Number(values.latitude),
-                  longitude: Number(values.longitude),
+                  latitude,
+                  longitude,
                 }}
                 onChange={handleMapChange}
               />

@@ -1,9 +1,5 @@
 import { findPaginatedVets } from '@/util/queries/vets';
-import EditVetsTable from './_components/EditVetsTable';
-import Link from 'next/link';
-import { cn } from 'clsx-for-tailwind';
 import Pagination from '@/components/Pagination/Pagination';
-import TextInput from '@/components/TextInput/TextInput';
 import EditableVetsList from './_components/EditableVetsList';
 
 type EditVetsProps = {

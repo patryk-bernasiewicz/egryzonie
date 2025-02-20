@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 
 type EditVetMapPositionProps = {
-  value: { latitude: number | null; longitude: number | null };
+  id: string;
+  value: { latitude: string | number | null; longitude: string | number | null };
   onChange: (latitude: number, longitude: number) => void;
 };
 
@@ -12,18 +13,20 @@ const defaultLatitude = 52.230036220572636;
 const defaultLongitude = 21.01191567834609;
 
 const EditVetMapPosition = ({
+  id,
   value = { latitude: defaultLatitude, longitude: defaultLongitude },
   onChange,
 }: EditVetMapPositionProps) => {
   const mapRef = useRef<L.Map>(null);
   const markerRef = useRef<L.Marker>(null);
+  const containerId = `map-${id}`;
 
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
     }
 
-    const container = L.DomUtil.get('map');
+    const container = L.DomUtil.get(containerId);
 
     if (container !== null) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -31,11 +34,10 @@ const EditVetMapPosition = ({
       container._leaflet_id = null;
     }
 
-    let { latitude, longitude } = value;
-    if (!latitude) latitude = defaultLatitude;
-    if (!longitude) longitude = defaultLongitude;
+    const latitude = Number(value.latitude) || defaultLatitude;
+    const longitude = Number(value.longitude) || defaultLongitude;
 
-    mapRef.current = L.map('map', {
+    mapRef.current = L.map(containerId, {
       attributionControl: false,
     }).setView([latitude, longitude], 14, {
       animate: false,
@@ -66,17 +68,19 @@ const EditVetMapPosition = ({
   }, []);
 
   useEffect(() => {
-    if (!mapRef.current || !value.latitude || !value.longitude) return;
+    const latitude = Number(value.latitude);
+    const longitude = Number(value.longitude);
+    if (!mapRef.current || !latitude || !longitude) return;
 
-    mapRef.current.setView([value.latitude, value.longitude], 14, {});
+    mapRef.current.setView([latitude, longitude], 14, {});
     if (markerRef.current) {
-      markerRef.current.setLatLng([value.latitude, value.longitude]);
+      markerRef.current.setLatLng([latitude, longitude]);
     }
   }, [value]);
 
   return (
     <div className="pointer-events-auto relative z-10 h-[300px] w-[300px]">
-      <div id="map" className="absolute inset-0" />
+      <div id={containerId} className="absolute inset-0" />
     </div>
   );
 };
