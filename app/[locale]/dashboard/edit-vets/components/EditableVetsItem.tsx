@@ -1,21 +1,30 @@
+'use client';
+
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Vet } from '@prisma/client';
 import { cn } from 'clsx-for-tailwind';
-import { MouseEvent, useState } from 'react';
+import dayjs from 'dayjs';
+import dynamic from 'next/dynamic';
+import { MouseEvent, useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/Button/Button';
 import TextInput from '@/components/TextInput/TextInput';
 import { ReactComponent as CartIcon } from '@/svg/cart.svg';
 
-import EditVetMapPosition from './EditVetMapPosition';
-import type { ViewType } from './EditableVetsList';
+import { editVet } from '../actions/edit-vet';
+import { EditVetFormValues } from '../types';
+
+const EditVetMapPosition = dynamic(() => import('./EditVetMapPosition'), {
+  ssr: false,
+});
 
 type EditableVetsItemProps = {
   vet: Vet;
-  viewType: ViewType;
 };
+
+const DATE_DISPLAY_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 const validationSchema = yup
   .object()
@@ -39,7 +48,7 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
     watch,
     setValue,
     reset,
-  } = useForm({
+  } = useForm<EditVetFormValues>({
     resolver: yupResolver(validationSchema),
     mode: 'onChange',
     defaultValues: {
@@ -75,6 +84,15 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
 
   const values = watch();
 
+  const handleSaveVet = useCallback(
+    async (data: EditVetFormValues) => {
+      await editVet(vet, data);
+      setEditMode(false);
+      reset(data);
+    },
+    [reset, setEditMode, vet],
+  );
+
   return (
     <div
       className={cn(
@@ -84,7 +102,7 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
       onClick={handleSetEdit}
     >
       {isEditMode ? (
-        <form onSubmit={handleSubmit((d) => console.log(d))}>
+        <form onSubmit={handleSubmit(handleSaveVet)}>
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="flex flex-col md:items-end">
               <EditVetMapPosition
@@ -94,12 +112,10 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
                   longitude: Number(values.longitude),
                 }}
                 onChange={handleMapChange}
+                onReset={resetMapPosition}
               />
-              <button type="button" onClick={resetMapPosition}>
-                Reset map position
-              </button>
             </div>
-            <div className="flex grow flex-col gap-y-2">
+            <div className="flex grow flex-col gap-y-2 pr-2">
               <TextInput
                 {...register('name')}
                 label="Nazwa"
@@ -151,7 +167,7 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
         <div className="flex items-center gap-x-2">
           <CartIcon className="mx-2 h-8 w-8" />
           <div className="flex flex-col gap-y-2">
-            <h2>{vet.name}</h2>
+            <h2 className="font-semibold">{vet.name}</h2>
             <address>Adres: {vet.address}</address>
             <p>Telefon: {vet.phone}</p>
             <p>E-mail: {vet.email}</p>
@@ -159,6 +175,14 @@ const EditableVetsItem = ({ vet }: EditableVetsItemProps) => {
               <p>Slug:</p>
               <pre>{vet.slug}</pre>
             </div>
+            <p className="text-sm">
+              <span className="font-medium">Dodano:</span>{' '}
+              {dayjs(vet.createdAt).format(DATE_DISPLAY_FORMAT)}
+            </p>
+            <p className="text-sm">
+              <span className="font-medium">Edytowano:</span>{' '}
+              {dayjs(vet.updatedAt).format(DATE_DISPLAY_FORMAT)}
+            </p>
           </div>
         </div>
       )}

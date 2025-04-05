@@ -14,5 +14,17 @@ export const routing = defineRouting({
       en: '/vets/[slug]',
       pl: '/weterynarze/[slug]',
     },
+    '/dashboard': {
+      en: '/dashboard',
+      pl: '/panel',
+    },
+    '/dashboard/edit-vets': {
+      en: '/dashboard/edit-vets',
+      pl: '/panel/edycja-weterynarzy',
+    },
+    '/dashboard/edit-vets/[slug]': {
+      en: '/dashboard/edit-vets/[slug]',
+      pl: '/panel/edycja-weterynarzy/[slug]',
+    },
   },
 });

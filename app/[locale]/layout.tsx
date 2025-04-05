@@ -1,8 +1,7 @@
 import 'simplebar-react/dist/simplebar.min.css';
 
-import Navbar from './_components/Navbar/Navbar';
-import AuthWrapper from './_components/AuthWrapper/AuthWrapper';
-
+import AuthWrapper from './components/AuthWrapper/AuthWrapper';
+import Navbar from './components/Navbar/Navbar';
 import './globals.css';
 
 export default function RootLayout({

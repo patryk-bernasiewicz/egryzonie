@@ -1,9 +1,10 @@
 'use client';
 
+import { cn } from 'clsx-for-tailwind';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+
 import { ReactComponent as GlassesIcon } from '@/svg/glasses.svg';
-import { cn } from 'clsx-for-tailwind';
 
 export const SearchInput = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ export const SearchInput = () => {
         </label>
         <button
           type="submit"
-          className="mmborder-0 inline-flex w-24 items-center justify-center rounded bg-yellow-300"
+          className="border-0 inline-flex w-24 items-center justify-center rounded bg-yellow-300"
         >
           <span className="sr-only">Szukaj</span>
           <GlassesIcon className="h-5 fill-white" />

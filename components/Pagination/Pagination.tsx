@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from 'clsx-for-tailwind';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
+
+import PaginationLink from './PaginationItem';
 
 type PaginationProps = {
   total: number;
@@ -20,48 +20,47 @@ const Pagination = ({
   const params = useParams();
 
   return (
-    <nav>
+    <nav className="my-2">
       <ul className="flex justify-center gap-x-2">
         <li>
-          <Link
+          <PaginationLink
             href={{
               pathname,
-              query: { ...params, [paginationKey]: 1 },
+              query: { ...params, [paginationKey]: '1' },
             }}
-            className="font-semibold"
+            disabled={current === 1}
           >
-            First
-          </Link>
+            &laquo;
+          </PaginationLink>
         </li>
         {new Array(total).fill(null).map((_, index) => {
           const page = index + 1;
+          const isActive = page === current;
+
           return (
             <li key={index}>
-              <Link
+              <PaginationLink
                 href={{
                   pathname,
                   query: { ...params, [paginationKey]: page },
                 }}
-                className={cn(
-                  'font-semibold',
-                  page === Number(current) && 'font-black underline',
-                )}
+                isActive={isActive}
               >
                 {page}
-              </Link>
+              </PaginationLink>
             </li>
           );
         })}
         <li>
-          <Link
+          <PaginationLink
             href={{
               pathname,
               query: { ...params, [paginationKey]: total },
             }}
-            className="font-semibold"
+            disabled={current === total}
           >
-            Last
-          </Link>
+            &raquo;
+          </PaginationLink>
         </li>
       </ul>
     </nav>

@@ -1,8 +1,11 @@
-import 'server-only';
-import { db } from '@/util/db';
 import { Vet } from '@prisma/client';
-import { GeoPoint } from '@/types/geopoint';
 import { unstable_cache } from 'next/cache';
+import 'server-only';
+
+import { VetSortByOption } from '@/app/[locale]/dashboard/edit-vets/types';
+import { GeoPoint } from '@/types/geopoint';
+import { SortDirection } from '@/types/sort-direction';
+import { db } from '@/util/db';
 
 export type VetWithDistance = Vet & {
   distance?: number;
@@ -73,19 +76,31 @@ export const findVetBySlug = unstable_cache(
   },
 );
 
+type FindPaginatedVetsParams = {
+  search?: string;
+  page?: number;
+  limit?: number;
+  sortBy?: VetSortByOption;
+  sortDirection?: SortDirection;
+};
+
+type FindPaginatedVetsReturnType = {
+  data: Vet[];
+  meta: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  };
+};
+
 export const findPaginatedVets = unstable_cache(
-  async (
-    search?: string,
+  async ({
+    search = '',
     page = 1,
     limit = 10,
-  ): Promise<{
-    data: Vet[];
-    meta: {
-      currentPage: number;
-      totalPages: number;
-      totalItems: number;
-    };
-  }> => {
+    sortBy = 'name',
+    sortDirection = 'desc',
+  }: FindPaginatedVetsParams): Promise<FindPaginatedVetsReturnType> => {
     const where = search?.length
       ? {
           OR: [
@@ -94,9 +109,13 @@ export const findPaginatedVets = unstable_cache(
           ],
         }
       : undefined;
+    const orderBy = {
+      [sortBy]: sortDirection,
+    };
 
     const vets = await db.vet.findMany({
       where,
+      orderBy,
       skip: (page - 1) * limit,
       take: limit,
     });

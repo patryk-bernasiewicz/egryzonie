@@ -1,8 +1,9 @@
 import { findNearbyVets } from '@/util/queries/vets';
-import { getCoordinatesFromCookie } from '../_utils/getCoordinatesFromCookie';
-import { SearchResultsBox } from './_components/SearchResultsBox';
-import { SearchResultsList } from './_components/SearchResultsList';
-import { SearchInput } from './_components/SearchInput';
+
+import { getCoordinatesFromCookie } from '../utils/getCoordinatesFromCookie';
+import { SearchInput } from './components/SearchInput';
+import { SearchResultsBox } from './components/SearchResultsBox';
+import { SearchResultsList } from './components/SearchResultsList';
 
 type VetsSearchPageProps = {
   searchParams: Promise<{ text?: string }>;
