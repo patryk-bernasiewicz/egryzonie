@@ -1,6 +1,6 @@
 {
   "name": "egryzonie",
-  "version": "0.1.0",
+  "version": "DEV-0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
@@ -48,3 +48,4 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
+

@@ -43,6 +43,19 @@ This is a simple version of a project my fiancé and I have wanted to build for 
 
 Right now you can only browse fake veterinary places, described in `prisma/seed.ts` file. The `/vets` page will ask you for permission to read your geolocation data, and if it's granted, it will show you 5 places closest to you by default, and more if you decide to type something into the search bar.
 
+## Versioning
+
+- **DEV Releases:**  
+  Use "DEV-" prefix with fake data for internal testing (e.g., `DEV-0.0.1`). The production version also uses fake data from dev version.
+
+- **Production Releases:**  
+  Remove the "DEV-" prefix for the official release (start with `0.0.1`). From here on, we're using real data on production
+
+- **Version Increments:**
+  - **Patch:** Bug fixes (`0.0.2`, `0.0.3`, etc.)
+  - **Minor:** New, backward-compatible features (`0.1.0`, `0.2.0`, etc.)
+  - **Major:** Breaking changes (`1.0.0`, `2.0.0`, etc.)
+
 ## Contact
 
 Let me know if this project caught your eye, if you have any tips for me, or just want to talk. My email address is [patryk.bernasiewicz[at]gmail.com](mailto:patryk.bernasiewicz@gmail.com)
