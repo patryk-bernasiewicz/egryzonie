@@ -1,5 +1,6 @@
 import { findVetBySlug } from '@/util/queries/vets';
-import MapDisplay from '../_components/MapDisplay';
+
+import MapDisplay from '../components/MapDisplay';
 
 const defaultLatitude = 52.230036220572636;
 const defaultLongitude = 21.01191567834609;

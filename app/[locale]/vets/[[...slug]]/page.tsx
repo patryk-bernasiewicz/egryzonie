@@ -1,8 +1,10 @@
+import { Metadata } from 'next';
+
 import { GeolocationWrapper } from '@/components/GeolocationWrapper/GeolocationWrapper';
 import { findVetBySlug } from '@/util/queries/vets';
-import { VetMapDetails } from './_components/VetMapDetails';
-import { VetInfoDetails } from './_components/VetInfoDetails';
-import { Metadata } from 'next';
+
+import { VetInfoDetails } from './components/VetInfoDetails';
+import { VetMapDetails } from './components/VetMapDetails';
 
 export const metadata: Metadata = {
   title: 'Wyszukiwarka weterynarzy',
