@@ -30,7 +30,7 @@ const EditVets = async ({ searchParams }: EditVetsProps) => {
     <div className="flex flex-col items-center gap-2">
       <Pagination
         total={meta.totalPages}
-        current={meta.currentPage.toString()}
+        current={meta.currentPage}
         pathname="/dashboard/edit-vets"
         paginationKey="page"
       />
@@ -41,7 +41,7 @@ const EditVets = async ({ searchParams }: EditVetsProps) => {
       <VetSortingSelect params={params} options={vetSortByOptions} />
       <Pagination
         total={meta.totalPages}
-        current={meta.currentPage.toString()}
+        current={meta.currentPage}
         pathname="/dashboard/edit-vets"
         paginationKey="page"
       />
